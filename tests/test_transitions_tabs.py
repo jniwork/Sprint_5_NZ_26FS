@@ -5,25 +5,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from pages.locators import Locators
 from pages.urls import Urls
 from data.test_data import TestData
+from helpers.auth_helper import login_user
 
 
 class TestTransitionsTabs:
-
-    def login_user(self, driver):
-        input_email = driver.find_element(By.XPATH, Locators.LOGIN_INPUT_EMAIL)
-        input_email.send_keys(TestData.LOGIN_EMAIL)
-
-        input_password = driver.find_element(By.XPATH, Locators.LOGIN_INPUT_PASSWORD)
-        input_password.send_keys(TestData.LOGIN_PASSWORD)
-
-        login_button = driver.find_element(By.XPATH, Locators.LOGIN_PAGE_LOGIN_BUTTON)
-        login_button.click()
-
-        # Ждем загрузки главной страницы после логина
-        WebDriverWait(driver, 10).until(EC.url_changes(Urls.LOGIN_URL))
-        WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, Locators.MAIN_PAGE_HEADER))
-        )
 
     @pytest.mark.parametrize("tab_locator,expected_text", [
         (Locators.MAIN_PAGE_SAUCES, TestData.TAB_NAMES['sauces']),
@@ -32,7 +17,7 @@ class TestTransitionsTabs:
     ])
     def test_transition_to_tabs(self, driver, tab_locator, expected_text):
         driver.get(Urls.LOGIN_URL)
-        self.login_user(driver)
+        login_user(driver)
         if expected_text == TestData.TAB_NAMES['breads']:
             sauce_tab = WebDriverWait(driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, Locators.MAIN_PAGE_SAUCES))

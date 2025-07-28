@@ -1,7 +1,7 @@
 class Locators:
     # Registration page
-    REGISTRATION_INPUT_NAME = '//input[@name="name"]'
-    REGISTRATION_INPUT_EMAIL = '//fieldset[2]//input[@name="name"]'
+    REGISTRATION_INPUT_NAME = '//label[contains(text(), "Имя")]'
+    REGISTRATION_INPUT_EMAIL = '//label[contains(text(), "Email")]'
     REGISTRATION_INPUT_PASSWORD = '//input[@type="password"]'
     REGISTRATION_BUTTON = '//button[text()="Зарегистрироваться"]'
     REGISTRATION_PAGE_LOGIN_BUTTON = '//a[text()="Войти"]'
